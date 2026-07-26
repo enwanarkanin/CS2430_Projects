@@ -139,3 +139,119 @@ public class AlgorithmPerformance {
 
 		return i + 1;
 	}
+
+	static int heapComparisons; // used for tracking comparisons
+
+	public static SortResult heapSort(int[] arr) { // for heap sort
+
+		heapComparisons = 0;// default is zero
+
+		int[] copy = arr.clone(); // copy the array so original can be reused
+
+		int n = copy.length;
+
+		for (int i = n / 2 - 1; i >= 0; i--) { // build the max heap
+			heapify(copy, n, i);
+		}
+
+		for (int i = n - 1; i > 0; i--) { // remove largest element
+
+			swap(copy, 0, i); // move largest to end
+
+			heapify(copy, i, 0); // restore heap
+		}
+
+		return new SortResult(copy, heapComparisons);
+	}
+
+	private static void heapify(int[] arr, int n, int i) { // converts to max heap
+
+		int largest = i;
+
+		int left = 2 * i + 1;
+		int right = 2 * i + 2;
+
+		if (left < n) { // compares left
+
+			heapComparisons++;
+
+			if (arr[left] > arr[largest]) {
+				largest = left;
+			}
+		}
+
+		if (right < n) { // compares right
+
+			heapComparisons++;
+
+			if (arr[right] > arr[largest]) {
+				largest = right;
+			}
+		}
+
+		if (largest != i) { // swap and continue if root isn't largest
+
+			swap(arr, i, largest);
+
+			heapify(arr, n, largest);
+		}
+	}
+
+	public static SortResult shakerSort(int[] arr) { // for shaker/cocktail sort
+
+		int comparisons = 0; // default is zero
+
+		int[] copy = arr.clone(); // copy the array so original can be reused
+
+		boolean swapped = true;
+
+		int start = 0;
+		int end = copy.length - 1;
+
+		while (swapped) { // continue until no swaps
+
+			swapped = false;
+
+			for (int i = start; i < end; i++) { // forward
+
+				comparisons++;
+
+				if (copy[i] > copy[i + 1]) {
+
+					swap(copy, i, i + 1);
+
+					swapped = true;
+				}
+			}
+
+			if (!swapped) // sorted array
+				break;
+
+			swapped = false;
+
+			end--;
+
+			for (int i = end; i > start; i--) { // backward
+
+				comparisons++;
+
+				if (copy[i] < copy[i - 1]) {
+
+					swap(copy, i, i - 1);
+
+					swapped = true;
+				}
+			}
+
+			start++;
+		}
+
+		return new SortResult(copy, comparisons);
+	}
+
+	public static void swap(int[] arr, int i, int j) { // swap elements in array
+
+		int temp = arr[i];
+		arr[i] = arr[j];
+		arr[j] = temp;
+	}
