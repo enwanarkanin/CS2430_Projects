@@ -1,12 +1,7 @@
 package programming_project_1;
 
-/*
- * Elisabeth Gondolo
- * CS2430, Section 501
- * Programming Project - Summer 2026
- * Algorithm Performance
- */
-
+import java.util.Arrays;
+import java.util.Random;
 
 // Part 1
 //Create a method/function that generates arrays or lists of integers for testing.
@@ -16,7 +11,7 @@ package programming_project_1;
 
 public class AlgorithmPerformance {
 
-  	static Random random = new Random(); // for generating random numbers for testing
+	static Random random = new Random(); // for generating random numbers for testing
 
 	public static int[] generateArray(int n) { // creates an array with random integers
 		int[] arr = new int[n];
@@ -28,13 +23,25 @@ public class AlgorithmPerformance {
 		return arr;
 	}
 
-// Part 2
-//Merge sort
-//Quick sort
-//Heap sort
-//Shaker sort / cocktail sort
-  
-  	public static SortResult mergeSort(int[] arr) { // for merge sort
+	static class SortResult { // stores the sorting results and number of comparisons
+		int[] sortedArray;
+		int comparisons;
+
+		SortResult(int[] sortedArray, int comparisons) {
+			this.sortedArray = sortedArray;
+			this.comparisons = comparisons;
+		}
+	}
+
+	static int mergeComparisons; // used for tracking comparisons
+
+	// Part 2
+	// Merge sort
+	// Quick sort
+	// Heap sort
+	// Shaker sort / cocktail sort
+
+	public static SortResult mergeSort(int[] arr) { // for merge sort
 
 		mergeComparisons = 0; // default is zero
 
@@ -84,19 +91,51 @@ public class AlgorithmPerformance {
 		while (j < right.length) // copy remaining values from right
 			arr[k++] = right[j++];
 	}
-}
 
-// Part 3
-//Write a test driver that runs all four algorithms on the required input sizes.
-//For each run, display the input, sorted output, algorithm name, n value, and comparison count.
-//Include enough output in the report to verify that all four algorithms ran successfully.
-//Clearly label your output so the reader can distinguish algorithm results.
+	static int quickComparisons; // used for tracking comparisons
 
-// Part 4
-//Create a results table comparing the four algorithms for each required n value.
-//At minimum, report comparison counts for n = 4, 6, and 8.
-//If you run multiple trials or all permutations, include minimum, maximum, and average comparison counts where appropriate.
-//The report should explain what the table shows; do not include raw numbers without interpretation.
+	public static SortResult quickSort(int[] arr) {
 
+		quickComparisons = 0; // default is zero
 
+		int[] copy = arr.clone(); // copy the array so original can be reused
 
+		quickSortRecursive(copy, 0, copy.length - 1); // quick sort
+
+		return new SortResult(copy, quickComparisons); // return array and count
+	}
+
+	private static void quickSortRecursive(int[] arr, int low, int high) { // merge sort method
+
+		if (low < high) {
+
+			int pivotIndex = partition(arr, low, high); // find pivot
+
+			quickSortRecursive(arr, low, pivotIndex - 1); // sort left of pivot
+
+			quickSortRecursive(arr, pivotIndex + 1, high); // sort right of pivot
+		}
+	}
+
+	private static int partition(int[] arr, int low, int high) { // rearrange around pivot
+
+		int pivot = arr[high]; // use the last element as the pivot
+
+		int i = low - 1;
+
+		for (int j = low; j < high; j++) { // compare value to pivot
+
+			quickComparisons++;
+
+			if (arr[j] <= pivot) {
+
+				i++;
+
+				swap(arr, i, j); // move smaller value to left side
+			}
+		}
+
+		swap(arr, i + 1, high); // put pivot in correct place
+
+		return i + 1;
+	}
