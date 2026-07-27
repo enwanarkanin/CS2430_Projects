@@ -255,3 +255,53 @@ public class AlgorithmPerformance {
 		arr[i] = arr[j];
 		arr[j] = temp;
 	}
+	
+	// Part 3
+	//Write a test driver that runs all four algorithms on the required input sizes.
+	//For each run, display the input, sorted output, algorithm name, n value, and comparison count.
+	//Include enough output in the report to verify that all four algorithms ran successfully.
+	//Clearly label your output so the reader can distinguish algorithm results.
+	
+	// Part 4
+	//Create a results table comparing the four algorithms for each required n value.
+	//At minimum, report comparison counts for n = 4, 6, and 8.
+	//If you run multiple trials or all permutations, include minimum, maximum, and average comparison counts where appropriate.
+	//The report should explain what the table shows; do not include raw numbers without interpretation.
+	
+	public static void main(String[] args) { // for testing
+
+		int[] sizes = { 4, 6, 8 };
+
+		System.out.println("Sorting algorithm comparison:");
+
+		for (int n : sizes) { // run the tests
+
+			int[] data = generateArray(n); // generate random array
+
+			System.out.println("\nInput Size: " + n);
+			System.out.println("Original Array: " + Arrays.toString(data));
+
+			SortResult result;
+
+			result = mergeSort(data);
+			printResult("Merge Sort", n, result);
+
+			result = quickSort(data);
+			printResult("Quick Sort", n, result);
+
+			result = heapSort(data);
+			printResult("Heap Sort", n, result);
+
+			result = shakerSort(data);
+			printResult("Shaker Sort", n, result);
+		}
+	}
+	
+	public static void printResult(String algorithm, int n, SortResult result) {
+
+		System.out.println("\n" + algorithm);
+		System.out.println("Sorted Array : " + Arrays.toString(result.sortedArray));
+		System.out.println("Comparisons  : " + result.comparisons);
+
+	}
+}
