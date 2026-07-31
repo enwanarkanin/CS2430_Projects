@@ -57,4 +57,75 @@ public class SetOperations {
 
 		return result;
 	}
+
+	
+	public static HashMap<String, Integer> multisetUnion(HashMap<String, Integer> A, HashMap<String, Integer> B) { // Multiset Union
+
+		HashMap<String, Integer> result = new HashMap<>();
+
+		HashSet<String> all = new HashSet<>();
+		all.addAll(A.keySet());
+		all.addAll(B.keySet());
+
+		for (String key : all) {
+			result.put(key, Math.max(A.getOrDefault(key, 0), B.getOrDefault(key, 0)));
+		}
+
+		return result;
+	}
+
+	public static HashMap<String, Integer> multisetIntersection(HashMap<String, Integer> A,
+			HashMap<String, Integer> B) { // Multiset Intersection
+
+		HashMap<String, Integer> result = new HashMap<>();
+
+		HashSet<String> all = new HashSet<>();
+		all.addAll(A.keySet());
+		all.addAll(B.keySet());
+
+		for (String key : all) {
+
+			int count = Math.min(A.getOrDefault(key, 0), B.getOrDefault(key, 0));
+
+			if (count > 0)
+				result.put(key, count);
+		}
+
+		return result;
+	}
+	
+	public static HashMap<String, Integer> multisetDifference(HashMap<String, Integer> A, HashMap<String, Integer> B) {// Multiset Difference
+
+		HashMap<String, Integer> result = new HashMap<>();
+
+		HashSet<String> all = new HashSet<>();
+		all.addAll(A.keySet());
+		all.addAll(B.keySet());
+
+		for (String key : all) {
+
+			int value = A.getOrDefault(key, 0) - B.getOrDefault(key, 0);
+
+			if (value > 0)
+				result.put(key, value);
+		}
+
+		return result;
+	}
+
+	public static HashMap<String, Integer> multisetSum(HashMap<String, Integer> A, HashMap<String, Integer> B) { // Multiset Sum
+
+		HashMap<String, Integer> result = new HashMap<>();
+
+		HashSet<String> all = new HashSet<>();
+		all.addAll(A.keySet());
+		all.addAll(B.keySet());
+
+		for (String key : all) {
+
+			result.put(key, A.getOrDefault(key, 0) + B.getOrDefault(key, 0));
+		}
+
+		return result;
+	}
 }
