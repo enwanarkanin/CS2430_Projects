@@ -15,7 +15,6 @@ static final int MAX_WEIGHT = 700;
 		}
 	}
 
-	
 	static int totalWeight(ArrayList<Experiment> list) {
 		int total = 0;
 		for (Experiment e : list)
@@ -82,3 +81,44 @@ static final int MAX_WEIGHT = 700;
 			new Experiment("Cosmic Rays", 80, 7), new Experiment("Yeast Fermentation", 27, 4) };
 
 }
+
+	static class Solution {
+		ArrayList<Experiment> payload;
+		int rating;
+		int weight;
+
+		Solution(ArrayList<Experiment> payload) {
+			this.payload = payload;
+			this.rating = totalRating(payload);
+			this.weight = totalWeight(payload);
+		}
+	}
+
+	static ArrayList<Solution> bruteForce() {
+
+		ArrayList<Solution> solutions = new ArrayList<>();
+
+		int totalSets = 1 << experiments.length;
+
+		for (int mask = 0; mask < totalSets; mask++) { // 4096 subsets
+
+			ArrayList<Experiment> subset = new ArrayList<>();
+
+			for (int i = 0; i < experiments.length; i++) { // compute total weight & rating
+
+				if ((mask & (1 << i)) != 0) {
+					subset.add(experiments[i]);
+				}
+			}
+
+			int weight = totalWeight(subset);
+
+			if (weight <= MAX_WEIGHT) { // checks weight
+				solutions.add(new Solution(subset));
+			}
+		}
+
+		solutions.sort((a, b) -> b.rating - a.rating); // sorts by rating
+
+		return new ArrayList<>(solutions.subList(0, 3));
+	}
