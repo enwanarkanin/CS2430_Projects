@@ -1,3 +1,8 @@
+// Elisabeth Gondolo
+// CS 2430, section 501
+// Project name: Programming Project 3 – Spring 2026
+// Code for optimal selection
+
 package programming_project_3;
 
 import java.util.ArrayList;
