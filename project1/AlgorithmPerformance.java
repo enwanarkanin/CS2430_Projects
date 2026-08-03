@@ -1,3 +1,8 @@
+// Elisabeth Gondolo
+// CS 2430, section 501
+// Project name: Programming Project 1 – Spring 2026
+// Code for analazying algorithm performance
+
 package programming_project_1;
 
 import java.util.Arrays;
