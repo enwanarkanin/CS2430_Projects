@@ -6,12 +6,12 @@
 ## Compile
 From the folder containing the `project2` folder, run:
 
-javac project1/SetOperations.java
+javac project2/SetOperations.java
 
 ## Run
 Run the program with:
 
-java project1.SetOperations
+java project2.SetOperations
 
 ## Command-Line Arguments
 None.
