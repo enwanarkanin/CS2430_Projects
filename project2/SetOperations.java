@@ -1,3 +1,8 @@
+// Elisabeth Gondolo
+// CS 2430, section 501
+// Project name: Programming Project 2 – Spring 2026
+// Code for set operations
+
 package programming_project_2;
 
 import java.util.Arrays;
